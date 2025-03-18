@@ -3,4 +3,5 @@
 03 Simon Vargas         00012 00125.50 NA
 02 Einsten Augustine    00016 01000.00 NA
 07 Lebron James         00023 00000.00 NA
+05 Lionel Messi         00010 00000.00 NA
 00                      00000 00000.00 NA
