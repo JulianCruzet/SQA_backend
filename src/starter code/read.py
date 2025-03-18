@@ -89,7 +89,7 @@ def read_merged_bank_transactions(file_path):
                 name = clean_line[3:23].strip()
                 account_number = clean_line[24:29]
                 amount_str = clean_line[30:38]
-                misc_info = clean_line[39:40]
+                misc_info = clean_line[39:41]
 
                 # Validate transaction code
                 valid_transaction_codes = {"01", "02", "03", "04", "05", "06", "07", "08", "00"}

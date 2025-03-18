@@ -14,6 +14,7 @@ def main():
         if tra["transaction_code"] == "01":
             print(1)
 
+
         elif  tra["transaction_code"] == "02":
             print(2)
         elif tra["transaction_code"] == "03":
