@@ -79,7 +79,7 @@ def read_merged_bank_transactions(file_path):
         for line_num, line in enumerate(file, 1):
             clean_line = line.rstrip('\n')
 
-            if len(clean_line) != 40:
+            if len(clean_line) != 41:
                 print(f"ERROR: Line {line_num}: Invalid length ({len(clean_line)} chars)")
                 continue
 
@@ -103,7 +103,7 @@ def read_merged_bank_transactions(file_path):
                     continue
 
                 # Validate amount format
-                if (len(amount_str) != 8 or not amount_str[:-3].isdigit() or amount_str[-3:] != ".00"):
+                if (len(amount_str) != 8 or not amount_str[:-3].isdigit()):
                     print(f"ERROR: Line {line_num}: Invalid amount format '{amount_str}'")
                     continue
 
