@@ -3,8 +3,7 @@ from read import read_old_bank_accounts
 from write import write_new_current_accounts
 from print_error import log_constraint_error
 from change_account import AccountManager
-
-
+from move_money import Money_manager
 
 
 def main():
@@ -12,22 +11,31 @@ def main():
     transactions = read_merged_bank_transactions('merged_bank_transaction.txt')
     print(accounts)
     print(transactions)
+    money_manager  =Money_manager (accounts)
+
     for tra in transactions:
         if tra["transaction_code"] == "01":
-            print(1)
 
+            money_manager.withdraw(tra)
 
         elif  tra["transaction_code"] == "02":
-            print(2)
+            money_manager.transfer(tra,to_account=1)
+            # I just put a random account for now because the
+            # transaction line does not contain the destination account
         elif tra["transaction_code"] == "03":
-            print(3)
+
+            money_manager.pay_bill(tra)
+
         elif tra["transaction_code"] == "04":
-            print(4)
+
+            money_manager.deposit(tra)
+
         elif tra["transaction_code"] == "05":
-            create_transaction=AccountManager(accounts)
-            create_transaction.create_account(tra['account_number'],tra['name'],tra['amount'])
-            accounts=create_transaction.get_accounts()
-            print(accounts)
+            # create_transaction=AccountManager(accounts)
+            # create_transaction.create_account(tra['account_number'],tra['name'],tra['amount'])
+            # accounts=create_transaction.get_accounts()
+            # print(accounts)
+            print(5)
         elif tra["transaction_code"] == "06":
             print(6)
         elif tra["transaction_code"] == "07":
