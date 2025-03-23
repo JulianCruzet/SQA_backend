@@ -4,4 +4,6 @@
 02 Einsten Augustine    00016 01000.00 NA
 07 Lebron James         00023 00000.00 NA
 05 Lionel Messi         00010 00000.00 NA
+06 Alonzo Manaog        00001 00000.00 NA
+08 Julian Cruzet        00005 00000.00 NA
 00                      00000 00000.00 NA

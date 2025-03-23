@@ -12,7 +12,7 @@ def main():
     print(accounts)
     print(transactions)
     money_manager  =Money_manager (accounts)
-
+    account_manager = AccountManager(accounts)
     for tra in transactions:
         if tra["transaction_code"] == "01":
 
@@ -31,16 +31,16 @@ def main():
             money_manager.deposit(tra)
 
         elif tra["transaction_code"] == "05":
-            # create_transaction=AccountManager(accounts)
-            # create_transaction.create_account(tra['account_number'],tra['name'],tra['amount'])
-            # accounts=create_transaction.get_accounts()
-            # print(accounts)
+            account_manager.create_account(tra['account_number'],tra['name'],tra['amount'])
             print(5)
         elif tra["transaction_code"] == "06":
+            account_manager.delete_account(tra['account_number'])
             print(6)
         elif tra["transaction_code"] == "07":
+            account_manager.change_status(tra['account_number'])
             print(7)
         elif tra["transaction_code"] == "08":
+            account_manager.change_plan(tra['account_number'])
             print(8)
         elif tra["transaction_code"] == "00":
             break

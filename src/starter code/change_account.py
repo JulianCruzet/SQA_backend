@@ -18,26 +18,23 @@ class AccountManager:
         print("Account created successfully.")
 
     def delete_account(self, account_number):
-        if account_number in self.accounts:
-            del self.accounts[account_number]
+        if str(account_number) in self.accounts:
+            del self.accounts[str(account_number)]
             print("Account deleted successfully.")
         else:
             print("Account not found.")
 
-    def change_plan(self, account_number, new_plan):
-        if account_number in self.accounts:
-            if new_plan in ['NP', 'SP']:
-                self.accounts[account_number]['plan'] = new_plan
+    def change_plan(self, account_number):
+        if str(account_number) in self.accounts:
+                self.accounts[str(account_number)]['plan'] = 'NP'
                 print("Plan updated successfully.")
-            else:
-                print("Invalid plan. Choose 'NP' or 'SP'.")
         else:
             print("Account not found.")
 
     def change_status(self, account_number):
-        if account_number in self.accounts:
-            current_status = self.accounts[account_number]['status']
-            self.accounts[account_number]['status'] = 'D' if current_status == 'A' else 'A'
+        if str(account_number) in self.accounts:
+            current_status = self.accounts[str(account_number)]['status']
+            self.accounts[str(account_number)]['status'] = 'D' if current_status == 'A' else 'A'
             print("Status updated successfully.")
         else:
             print("Account not found.")
