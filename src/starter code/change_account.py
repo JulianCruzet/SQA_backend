@@ -1,10 +1,12 @@
+from print_error import log_constraint_error
+
 class AccountManager:
     def __init__(self, accounts):
         self.accounts = {acc['account_number']: acc for acc in accounts}  # Store accounts by account_number
 
     def create_account(self, account_number, name, balance=0.0, plan='SP'):
         if account_number in self.accounts:
-            print("Account already exists.")
+            log_constraint_error("Account already exists.",f'{account_number}  is already part of accounts')
             return
         new_account = {
             'account_number': account_number,
@@ -22,14 +24,14 @@ class AccountManager:
             del self.accounts[str(account_number)]
             print("Account deleted successfully.")
         else:
-            print("Account not found.")
+            log_constraint_error("Invalid account number",f'{account_number}  does not exist')
 
     def change_plan(self, account_number):
         if str(account_number) in self.accounts:
                 self.accounts[str(account_number)]['plan'] = 'NP'
                 print("Plan updated successfully.")
         else:
-            print("Account not found.")
+            log_constraint_error("Invalid account number",f'{account_number}  does not exist')
 
     def change_status(self, account_number):
         if str(account_number) in self.accounts:
@@ -37,7 +39,7 @@ class AccountManager:
             self.accounts[str(account_number)]['status'] = 'D' if current_status == 'A' else 'A'
             print("Status updated successfully.")
         else:
-            print("Account not found.")
+            log_constraint_error("Invalid account number",f'{account_number}  does not exist')
     def get_accounts(self):
         return self.accounts
 
