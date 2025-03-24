@@ -1,10 +1,7 @@
 from print_error import log_constraint_error
+from accounts import Accounts
 
-class Money_manager:
-    def __init__(self, accounts):
-        self.accounts = {acc['account_number']: acc for acc in accounts}
-
-
+class Money_manager(Accounts):
     def transfer(self,transaction,to_account):
         print("Transfer money ",10*"-")
         print(self.accounts,"\n",transaction)

@@ -1,22 +1,19 @@
 from print_error import log_constraint_error
-
-class AccountManager:
-    def __init__(self, accounts):
-        self.accounts = {acc['account_number']: acc for acc in accounts}  # Store accounts by account_number
-
+from accounts import Accounts
+class AccountManager(Accounts):
     def create_account(self, account_number, name, balance=0.0, plan='SP'):
         if account_number in self.accounts:
             log_constraint_error("Account already exists.",f'{account_number}  is already part of accounts')
             return
         new_account = {
-            'account_number': account_number,
+            'account_number': str(account_number),
             'name': name,
             'status': 'A',
             'balance': balance,
             'total_transactions': 0,
             'plan': plan if plan in ['NP', 'SP'] else 'SP'
         }
-        self.accounts[account_number] = new_account
+        self.accounts[str(account_number)] = new_account
         print("Account created successfully.")
 
     def delete_account(self, account_number):
@@ -40,9 +37,6 @@ class AccountManager:
             print("Status updated successfully.")
         else:
             log_constraint_error("Invalid account number",f'{account_number}  does not exist')
-    def get_accounts(self):
-        return self.accounts
-
     def display_accounts(self):
         for acc in self.accounts.values():
             print(acc)
