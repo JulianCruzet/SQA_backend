@@ -4,7 +4,7 @@ from accounts import Accounts
 class Money_manager(Accounts):
     def transfer(self,transaction,to_account):
         print("Transfer money ",10*"-")
-        print(self.accounts,"\n",transaction)
+        # print(self.accounts,"\n",transaction)
         amount = transaction['amount']
         from_account = transaction['account_number']
 
@@ -23,23 +23,23 @@ class Money_manager(Accounts):
 
     def deposit (self,transaction):
         print("Deposit money ",10*"-")
-        print(self.accounts,"\n",transaction)
+        #print(self.accounts,"\n",transaction)
 
         account_number = transaction['account_number']
-        print(account_number)
+        #print(account_number)
         if str(account_number) not  in self.accounts:
             log_constraint_error("Invalid account number", transaction['account_number'])
             return
 
         self.accounts[str(account_number)]['balance'] += transaction['amount']
-        print(self.accounts,"\n",self.accounts)
+        #print(self.accounts,"\n",self.accounts)
 
     def withdraw (self,transaction):
         print("Withdraw money ",10*"-")
-        print(self.accounts,"\n",transaction)
+       # print(self.accounts,"\n",transaction)
 
         account_number = transaction['account_number']
-        print(account_number)
+        #print(account_number)
         if str(account_number) not  in self.accounts:
             log_constraint_error("Invalid account number", transaction['account_number'])
             return
@@ -48,11 +48,11 @@ class Money_manager(Accounts):
             log_constraint_error("Invalid amount","Final amount will be NEGATIVE")
             return
         self.accounts[str(account_number)]['balance'] = final_amount
-        print(self.accounts,"\n",self.accounts)
+        #print(self.accounts,"\n",self.accounts)
 
     def pay_bill (self,transaction):
         print("Pay Bill money ",10*"-")
-        print(self.accounts,"\n",transaction)
+        #print(self.accounts,"\n",transaction)
 
         account_number = transaction['account_number']
         print(account_number)
@@ -64,4 +64,4 @@ class Money_manager(Accounts):
             log_constraint_error("Invalid amount","Final amount will be NEGATIVE")
             return
         self.accounts[str(account_number)]['balance'] = final_amount
-        print(self.accounts,"\n",self.accounts)
+        #print(self.accounts,"\n",self.accounts)
