@@ -37,6 +37,3 @@ class AccountManager(Accounts):
             print("Status updated successfully.")
         else:
             log_constraint_error("Invalid account number",f'{account_number}  does not exist')
-    def display_accounts(self):
-        for acc in self.accounts.values():
-            print(acc)
