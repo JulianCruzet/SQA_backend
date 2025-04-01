@@ -69,6 +69,7 @@ def main():
     print(transactions)
     money_manager  =Money_manager (accounts)
     account_manager = AccountManager(accounts)
+    with_draw_fail = False
 
     for tra in transactions:
         if tra["transaction_code"] == "01":
@@ -76,7 +77,14 @@ def main():
             money_manager.withdraw(tra)
 
         elif  tra["transaction_code"] == "02":
-            money_manager.transfer(tra,to_account=1)
+            #money_manager.transfer(tra,to_account=1)
+            if tra['misc_info'] == "FR":
+                if not  money_manager.withdraw(tra):
+                    with_draw_fail = True
+            elif tra['misc_info'] == "TO" and not with_draw_fail:
+                with_draw_fail = True
+                money_manager.deposit(tra)
+
             # I just put a random account for now because the
             # transaction line does not contain the destination account
         elif tra["transaction_code"] == "03":

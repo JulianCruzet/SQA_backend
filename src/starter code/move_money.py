@@ -14,7 +14,7 @@ class Money_manager(Accounts):
 
         from_account_final_amount = self.accounts[str(from_account)]['balance'] - amount
         if from_account_final_amount <0:
-            log_constraint_error("Invalid final balance", f'{from_accountlog_constraint_error("Invalid amount","Final amount will be NEGATIVE")} or {to_account} not found')
+            log_constraint_error("Invalid final balance", f'{log_constraint_error("Invalid amount","Final amount will be NEGATIVE")} or {to_account} not found')
             return
         self.accounts[str(from_account)]['balance'] = from_account_final_amount
 

@@ -1,5 +1,6 @@
-00001 Alonzo Manaog        A 00123.00 0010 SP
-00005 Julian Cruzet        A 00045.00 0005 SP
-00012 Simon Vargas         A 00987.50 0123 NP
-00016 Einsten Augustine    A 02345.00 0456 SP
-00023 Lebron James         A 00000.00 0000 NP
+00001 Alonzo Manaog        A 00073.00 SP
+00005 Julian Cruzet        A 00245.00 NP
+00012 Simon Vargas         A 00862.00 NP
+00016 Einsten Augustine    A 01345.00 SP
+00023 Lebron James         D 00000.00 NP
+00000 END_OF_FILE          A 00000.00 NP

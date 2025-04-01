@@ -1,9 +1,10 @@
 01 Alonzo Manaog        00001 00050.00 NA
 04 Julian Cruzet        00005 00200.00 NA
 03 Simon Vargas         00012 00125.50 NA
-02 Einsten Augustine    00016 01000.00 NA
+02 Einsten Augustine    00016 01000.00 FR
+02 Simon Vargas         00016 01000.00 TO
 07 Lebron James         00023 00000.00 NA
 05 Lionel Messi         00010 00000.00 NA
-06 Alonzo Manaog        00001 00000.00 NA
+06 Lionel Messi         00010 00000.00 NA
 08 Julian Cruzet        00005 00000.00 NA
 00                      00000 00000.00 NA
