@@ -10,7 +10,6 @@ def read_merged_bank_transactions(file_path):
     with open(file_path, 'r') as file:
         for line_num, line in enumerate(file, 1):
             clean_line = line.rstrip('\n')
-
             if len(clean_line) != 41:
                 print(f"ERROR: Line {line_num}: Invalid length ({len(clean_line)} chars)")
                 continue
@@ -22,6 +21,7 @@ def read_merged_bank_transactions(file_path):
                 account_number = clean_line[24:29]
                 amount_str = clean_line[30:38]
                 misc_info = clean_line[39:41]
+
 
                 # Validate transaction code
                 valid_transaction_codes = {"01", "02", "03", "04", "05", "06", "07", "08", "00"}
@@ -42,7 +42,8 @@ def read_merged_bank_transactions(file_path):
                 # Convert numeric values
                 account_number = int(account_number)
                 amount = float(amount_str)
-
+                if transaction_code == "00":
+                    break
                 transactions.append({
                     'transaction_code': transaction_code,
                     'name': name,
@@ -50,10 +51,8 @@ def read_merged_bank_transactions(file_path):
                     'amount': amount,
                     'misc_info': misc_info
                 })
-
                 # Stop processing if end-of-session code is found
-                if transaction_code == "00":
-                    break
+
 
             except Exception as e:
                 print(f"ERROR: Line {line_num}: Unexpected error: {str(e)}")
