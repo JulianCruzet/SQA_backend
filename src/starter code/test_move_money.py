@@ -38,4 +38,4 @@ def test_deposit_zero_amount(setup_accounts):
 def test_deposit_negative_amount(setup_accounts):
     transaction = {"account_number": "12345", "amount": -10.00}
     setup_accounts.deposit(transaction)
-    assert setup_accounts.accounts["12345"]["balance"] == 90.00
+    assert setup_accounts.accounts["12345"]["balance"] == 100.00

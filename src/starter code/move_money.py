@@ -33,19 +33,19 @@ class Money_manager(Accounts):
             return
 
         # Debugging statement to check structure
-        print("DEBUG: Account structure:", self.accounts)
-
-        if not isinstance(self.accounts[account_number], dict):
-            log_constraint_error("Account data corrupted", account_number)
-            return
-
-        if not isinstance(amount, (int, float)):
-            log_constraint_error("Invalid amount type", f"Expected int/float, got {type(amount)}")
-            return
-
-        # if amount < 0:
-        #     log_constraint_error("Invalid deposit amount", "Amount cannot be negative")
+        # print("DEBUG: Account structure:", self.accounts)
+        #
+        # if not isinstance(self.accounts[account_number], dict):
+        #     log_constraint_error("Account data corrupted", account_number)
         #     return
+        #
+        # if not isinstance(amount, (int, float)):
+        #     log_constraint_error("Invalid amount type", f"Expected int/float, got {type(amount)}")
+        #     return
+
+        if amount < 0:
+            log_constraint_error("Invalid deposit amount", "Amount cannot be negative")
+            return
 
         self.accounts[account_number]['balance'] += amount
     def withdraw (self,transaction):
