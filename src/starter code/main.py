@@ -106,7 +106,7 @@ def main():
         elif tra["transaction_code"] == "00":
             accounts=account_manager.get_accounts()
             final_accounts = list(accounts.values())
-            write_new_current_accounts(final_accounts,'master_accounts.txt')
+            #write_new_current_accounts(final_accounts,'master_accounts.txt')
             write_new_current_accounts(final_accounts,'current_accounts.txt')
             break
         else:

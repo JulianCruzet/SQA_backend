@@ -10,6 +10,8 @@ def setup_accounts():
         "12345": {"balance": 100.00},
         "67890": {"balance": 50.00}
     }
+    accounts =[{'account_number': '12345', 'name': 'Alonzo Manaog', 'status': 'A', 'balance': 100, 'total_transactions': 0,
+      'plan': 'SP'},]
     return Money_manager(accounts)
 
 
