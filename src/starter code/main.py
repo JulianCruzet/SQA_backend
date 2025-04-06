@@ -59,6 +59,11 @@ def read_merged_bank_transactions(file_path):
                 continue
 
     return transactions
+def apply_fee(account):
+    if account['plan'] =="SP":
+        account['balance'] -= 0.05
+    else:
+        account['balance'] -= 0.1
 
 
 def main():
@@ -69,39 +74,49 @@ def main():
     money_manager  =Money_manager (accounts)
     account_manager = AccountManager(accounts)
     with_draw_fail = False
+    new_accounts =account_manager.get_accounts()
 
     for tra in transactions:
         if tra["transaction_code"] == "01":
 
             money_manager.withdraw(tra)
+            apply_fee(new_accounts[str(tra['account_number'])])
+
 
         elif  tra["transaction_code"] == "02":
             #money_manager.transfer(tra,to_account=1)
             if tra['misc_info'] == "FR":
                 if not  money_manager.withdraw(tra):
                     with_draw_fail = True
+                    apply_fee(new_accounts[str(tra['account_number'])])
             elif tra['misc_info'] == "TO" and not with_draw_fail:
                 with_draw_fail = True
                 money_manager.deposit(tra)
+                apply_fee(new_accounts[str(tra['account_number'])])
 
             # I just put a random account for now because the
             # transaction line does not contain the destination account
         elif tra["transaction_code"] == "03":
 
             money_manager.pay_bill(tra)
+            apply_fee(new_accounts[str(tra['account_number'])])
 
         elif tra["transaction_code"] == "04":
 
             money_manager.deposit(tra)
+            apply_fee(new_accounts[str(tra['account_number'])])
 
         elif tra["transaction_code"] == "05":
             account_manager.create_account(tra['account_number'],tra['name'],tra['amount'])
+            apply_fee(new_accounts[str(tra['account_number'])])
         elif tra["transaction_code"] == "06":
             account_manager.delete_account(tra['account_number'])
         elif tra["transaction_code"] == "07":
             account_manager.change_status(tra['account_number'])
+            apply_fee(new_accounts[str(tra['account_number'])])
         elif tra["transaction_code"] == "08":
             account_manager.change_plan(tra['account_number'])
+            apply_fee(new_accounts[str(tra['account_number'])])
         elif tra["transaction_code"] == "00":
             accounts=account_manager.get_accounts()
             final_accounts = list(accounts.values())
