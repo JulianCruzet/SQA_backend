@@ -1,0 +1,22 @@
+Welcome to the banking system
+enter the session type:
+login success
+enter account holder name
+enter account number
+account 34567 disabled
+enter account holder
+enter account number
+transaction cancelled: account disabled
+enter account name
+enter account number
+transaction cancelled: account disabled
+enter account name
+enter account holder
+transaction cancelled: account disabled
+account holder
+account number
+transaction cancelled: account disabled
+account holder
+account number
+transaction cancelled: account disabled
+session terminated
