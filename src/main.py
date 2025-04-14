@@ -121,7 +121,7 @@ def main():
             accounts=account_manager.get_accounts()
             final_accounts = list(accounts.values())
             #write_new_current_accounts(final_accounts,'master_accounts.txt')
-            write_new_current_accounts(final_accounts,'current_accounts.txt')
+            write_new_current_accounts(final_accounts, 'current_accounts.txt')
             break
         else:
             log_constraint_error("Invalid transaction code", tra["transaction_code"])

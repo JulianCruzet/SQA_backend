@@ -42,10 +42,11 @@ class CreateAccount:
         #  account created successfully 
         print(f'Account {account_number} was created with initial balance {formatted_balance}')
         self.next_account_number += 1  
-        self.transaction_file_line = "05 " + str(account_holder).ljust(20) + " " + account_number + " " + str(initial_balance).zfill(8) 
+        self.transaction_file_line = f"05 {str(account_holder).ljust(20)} {str(account_number).zfill(5)} {format(initial_balance, '08.2f')} NA"
+
         self.account_info = account_number + ' ' + account_holder + ' A ' + str(initial_balance)
         
-        return account_info
+        return self.transaction_file_line
     
     def change_plan(self):
         accounts = account_utils.read_bank_accounts()
@@ -68,7 +69,8 @@ class CreateAccount:
         #get balance from account file
         #update to current account file
         #add transaction line to file
-        self.transaction_file_line = "08 " + str(self.account_holder).ljust(20) + " " + self.account_number + " " + str(account['balance']).zfill(8) + " " + self.payment_plan
+        self.transaction_file_line = f"08 {str(self.account_holder).ljust(20)} {str(self.account_number).zfill(5)} {format(account['balance'], '08.2f')} {self.payment_plan}"
+
         self.account_info = self.account_number + ' ' + self.account_holder + ' A ' + str(account['balance'])
         
         print(f'account {self.account_number} status has been change to NP')

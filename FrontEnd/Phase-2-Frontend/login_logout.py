@@ -3,9 +3,12 @@ import account_utils
 
 def write_transactions(transactions):
     """Simulates writing the transaction log to a file."""
-    # print("Writing transactions to file...")
-    for transaction in transactions:
-        print(transaction)
+    file_path = '../../src/merged_bank_transaction.txt'
+    with open(file_path, 'w') as file:
+        for transaction in transactions:
+            file.write(f"{transaction}\n")
+
+        file.write('00                      00000 00000.00 NA')
 
 class Login:
     # This class is used to hold information of the current login session S

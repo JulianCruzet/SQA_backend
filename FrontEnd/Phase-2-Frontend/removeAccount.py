@@ -37,7 +37,8 @@ class removeAccount:
         # Update accounts.txt
         account_utils.update_bank_accounts(accounts)
 
-        self.transaction_file_line = f"06 {self.account_holder.ljust(20)} {self.account_number} {str(self.balance).zfill(8)} DD"
+        self.transaction_file_line = self.transaction_file_line = f"06 {self.account_holder.ljust(20)} {str(self.account_number).zfill(5)} {format(self.balance, '08.2f')} NA"
+
         print(f'Account {self.account_number} deleted successfully.')
 
         return self.transaction_file_line
@@ -68,7 +69,8 @@ class removeAccount:
         account["status"] = "D"
         account_utils.update_bank_accounts(accounts)
 
-        self.transaction_file_line = f"07 {self.account_holder.ljust(20)} {self.account_number} {str(account['balance']).zfill(8)} DD"
+        self.transaction_file_line = f"07 {self.account_holder.ljust(20)} {str(self.account_number).zfill(5)} {format(account['balance'], '08.2f')} NA"
+
         print(f'Account {self.account_number} disabled successfully.')
 
         return self.transaction_file_line

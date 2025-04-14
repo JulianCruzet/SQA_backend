@@ -2,27 +2,115 @@ def read_bank_accounts():
     """Simulates reading the current bank accounts file."""
     # print("Reading bank accounts file...")
     accounts = []
+    return read_old_bank_accounts('../../src/master_accounts.txt')
 
-    with open('accounts.txt', 'r') as file:
-        for line in file:
-            line = line.strip()
-            if line == "END_OF_FILE":
-                break  # Stop reading when we reach the END_OF_FILE marker
-            
-            parts = line.split()
-            if len(parts) != 4:
-                print(f"Skipping malformed line: {line}")
+    # with open('../../src/current_accounts.txt', 'r') as file:
+    #     for line in file:
+    #         line = line.strip()
+    #         if line == "END_OF_FILE":
+    #             break  # Stop reading when we reach the END_OF_FILE marker
+    #
+    #         parts = line.split()
+    #         if len(parts) != 5:
+    #             print(f"Skipping malformed line: {line}")
+    #             continue
+    #
+    #         account_info = {
+    #             "account_number": parts[0],
+    #             "account_name": parts[1],
+    #             "status": parts[2],  # 'A' for Active, 'D' for Disabled
+    #             "balance": float(parts[3])  # Convert balance to a float
+    #         }
+    #
+    #         accounts.append(account_info)
+    #
+    # return accounts
+def read_old_bank_accounts(file_path):
+    """
+    Reads and validates the bank account file format with plan type (SP/NP)
+    Returns list of accounts and prints fatal errors for invalid format
+    """
+    accounts = []
+    with open(file_path, 'r') as file:
+        for line_num, line in enumerate(file, 1):
+            clean_line = line.rstrip('\n')
+
+            # Validate line length (now 44 chars to include plan type)
+            if len(clean_line) != 44:
+                print(f"ERROR: Fatal error - Line {line_num}: Invalid length ({len(clean_line)} chars, expected 45)")
                 continue
 
-            account_info = {
-                "account_number": parts[0],
-                "account_name": parts[1],
-                "status": parts[2],  # 'A' for Active, 'D' for Disabled
-                "balance": float(parts[3])  # Convert balance to a float
-            }
+            try:
+                # Extract fields with positional validation
+                account_number = clean_line[0:5]
+                name = clean_line[6:25]  # 20 characters
+                status = clean_line[26]
+                balance_str = clean_line[28:36]  # 8 characters
+                transactions_str = clean_line[37:41]  # 4 characters
+                plan_type = clean_line[42:45]  # 2 characters (SP/NP)
 
-            accounts.append(account_info)
-    
+                # Validate account number
+                if not account_number.isdigit():
+                    print(f"ERROR: Fatal error - Line {line_num}: Account number must be 5 digits")
+                    continue
+
+                # Validate status
+                if status not in ('A', 'D'):
+                    print(f"ERROR: Fatal error - Line {line_num}: Invalid status '{status}'. Must be 'A' or 'D'")
+                    continue
+
+                # Validate balance format with explicit negative check
+                if balance_str[0] == '-':
+                    print(f"ERROR: Fatal error - Line {line_num}: Negative balance detected: {balance_str}")
+                    continue
+
+                if (len(balance_str) != 8 or
+                        balance_str[5] != '.' or
+                        not balance_str[:5].isdigit() or
+                        not balance_str[6:].isdigit()):
+                    print(
+                        f"ERROR: Fatal error - Line {line_num}: Invalid balance format. Expected XXXXX.XX, got {balance_str}")
+                    continue
+
+                # Validate transaction count
+                if not transactions_str.isdigit():
+                    print(f"ERROR: Fatal error - Line {line_num}: Transaction count must be 4 digits")
+                    continue
+
+                # Validate plan type
+                if plan_type not in ('SP', 'NP'):
+                    print(f"ERROR: Fatal error - Line {line_num}: Invalid plan type '{plan_type}'. Must be SP or NP")
+                    continue
+
+                # Convert values
+                balance = float(balance_str)
+                transactions = int(transactions_str)
+
+                # Business rule validation
+                if balance < 0:
+                    print(f"ERROR: Fatal error - Line {line_num}: Negative balance detected")
+                    continue
+                if transactions < 0:
+                    print(f"ERROR: Fatal error - Line {line_num}: Negative transaction not allowed")
+                    continue
+
+                accounts.append({
+                    'account_number': account_number.lstrip('0') or '0',
+                    'account_name': name.strip(),
+                    'status': status,
+                    'balance': balance,
+                    'total_transactions': transactions,
+                    'plan': plan_type
+                })
+               # "account_number": parts[0],
+                #             "account_name": parts[1],
+                #             "status": parts[2],  # 'A' for Active, 'D' for Disabled
+                #             "balance": float(parts[3])
+
+            except Exception as e:
+                print(f"ERROR: Fatal error - Line {line_num}: Unexpected error - {str(e)}")
+                continue
+
     return accounts
 
 def find_account_by_name(accounts, name):

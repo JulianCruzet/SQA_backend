@@ -62,7 +62,11 @@ class moveMoney:
                 
         account_utils.update_bank_accounts(accounts)
         print("Transfer accepted")
-        return True, f"02 {self.account_holder.ljust(20)} {self.transferfrom} {str(self.transferAmount).zfill(8)}"
+        # Format both lines
+        sender_line = f"02 {self.account_holder.ljust(20)} {self.transferfrom.zfill(5)} {format(self.transferAmount, '08.2f')} FR"
+        receiver_line = f"02 {self.transferto.ljust(20)} {self.transferto.zfill(5)} {format(self.transferAmount, '08.2f')} TO"
+
+        return True, f"{sender_line}\n{receiver_line}"
 
         
     def pay_bill(self):
@@ -124,9 +128,9 @@ class moveMoney:
 
         
         account_utils.update_bank_accounts(accounts)
-        return True, f"03 {self.account_holder.ljust(20)} {self.account_number} {str(self.payAmount).zfill(8)}"
+        #f"03 {self.account_holder.ljust(20)} {self.account_number} {str(self.payAmount).zfill(8)}"
 
-
+        return True, f"03 {self.account_holder.ljust(20)} {str(self.account_number).zfill(5)} {format(self.payAmount, '08.2f')} NA"
 
 
     def deposit(self):
@@ -153,8 +157,10 @@ class moveMoney:
 
         print(f'{self.depositAmount} deposited into account {self.account_number}')
         account_utils.update_bank_accounts(accounts)
-        return True, f"04 {self.account_holder.ljust(20)} {self.account_number} {str(account['balance']).zfill(8)}"
-        
+        #f"04 {self.account_holder.ljust(20)} {self.account_number} {str(account['balance']).zfill(8)}"
+        return True, f"04 {self.account_holder.ljust(20)} {str(self.account_number).zfill(5)} {format(account['balance'], '08.2f')} NA"
+
+
     def withdraw(self):
         accounts = account_utils.read_bank_accounts()
         withdrawAmount = 0
@@ -197,5 +203,6 @@ class moveMoney:
         
         account_utils.update_bank_accounts(accounts)
         
-        return True, f"01 {self.account_holder.ljust(20)} {self.account_number} {str(self.depositAmount).zfill(8)}"
+        return True, f"01 {self.account_holder.ljust(20)} {str(self.account_number).zfill(5)} {format(self.withdrawAmount, '08.2f')} NA"
+
 
