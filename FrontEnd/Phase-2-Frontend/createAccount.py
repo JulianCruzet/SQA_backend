@@ -27,17 +27,17 @@ class CreateAccount:
         account_info = f"{account_number} {account_holder} A {formatted_balance}"  
 
         
-        with open(self.account_file, 'r+') as file:
-            lines = file.readlines()
-            if lines and lines[-1].strip() == 'END_OF_FILE':
-                lines = lines[:-1]  
-
-            file.seek(0)  
-            file.writelines(lines)  
-            file.truncate()  
-            
-            file.write(account_info + '\n') 
-            file.write("END_OF_FILE\n")  
+        # with open(self.account_file, 'r+') as file:
+        #     lines = file.readlines()
+        #     if lines and lines[-1].strip() == 'END_OF_FILE':
+        #         lines = lines[:-1]
+        #
+        #     file.seek(0)
+        #     file.writelines(lines)
+        #     file.truncate()
+        #
+        #     file.write(account_info + '\n')
+        #     file.write("END_OF_FILE\n")
 
         #  account created successfully 
         print(f'Account {account_number} was created with initial balance {formatted_balance}')

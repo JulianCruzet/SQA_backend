@@ -1,14 +1,13 @@
 import sys
 import account_utils
+import os
 
-def write_transactions(transactions):
+def write_transactions(transactions,file_path):
     """Simulates writing the transaction log to a file."""
-    file_path = '../../src/merged_bank_transaction.txt'
+
     with open(file_path, 'w') as file:
         for transaction in transactions:
             file.write(f"{transaction}\n")
-
-        file.write('00                      00000 00000.00 NA')
 
 class Login:
     # This class is used to hold information of the current login session S
@@ -50,15 +49,28 @@ class Login:
                 self.admin_mode = session_type == "admin"
                 print("login success")
                 # print(f"Login Successful: Welcome {self.account_holder if self.account_holder else 'Admin'} ({session_type.capitalize()})!")
-    
-    def logout(self):
+
+    import os
+
+    def logout(self, day=None):
         if not self.logged_in:
             print("Error: You are not logged in.")
             return
-        
-        # Write transaction file before logout (Assume write_transactions() is implemented)
-        write_transactions(self.transactions)
-        
+
+        # Get absolute path of the current script
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+
+        if day is None:
+            file_path = os.path.join(current_dir, '../../src/merged_bank_transaction.txt')
+        else:
+            file_path = os.path.join(current_dir, f'../../src/sessions/day#{day}.txt')
+
+        # Normalize path to avoid issues
+        file_path = os.path.normpath(file_path)
+
+        # Write transaction file before logout
+        write_transactions(self.transactions, file_path)
+
         print("session terminated")
         self.logged_in = False
         self.admin_mode = False

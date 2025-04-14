@@ -1,0 +1,7 @@
+login
+admin
+delete
+Lebron James
+23
+1
+logout#3

@@ -1,30 +1,12 @@
-def read_bank_accounts():
-    """Simulates reading the current bank accounts file."""
-    # print("Reading bank accounts file...")
-    accounts = []
-    return read_old_bank_accounts('../../src/master_accounts.txt')
+import os
 
-    # with open('../../src/current_accounts.txt', 'r') as file:
-    #     for line in file:
-    #         line = line.strip()
-    #         if line == "END_OF_FILE":
-    #             break  # Stop reading when we reach the END_OF_FILE marker
-    #
-    #         parts = line.split()
-    #         if len(parts) != 5:
-    #             print(f"Skipping malformed line: {line}")
-    #             continue
-    #
-    #         account_info = {
-    #             "account_number": parts[0],
-    #             "account_name": parts[1],
-    #             "status": parts[2],  # 'A' for Active, 'D' for Disabled
-    #             "balance": float(parts[3])  # Convert balance to a float
-    #         }
-    #
-    #         accounts.append(account_info)
-    #
-    # return accounts
+def read_bank_accounts():
+    """Reads the current bank accounts file."""
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_dir, '../../src/master_accounts.txt')
+    return read_old_bank_accounts(file_path)
+
+
 def read_old_bank_accounts(file_path):
     """
     Reads and validates the bank account file format with plan type (SP/NP)
@@ -110,7 +92,6 @@ def read_old_bank_accounts(file_path):
             except Exception as e:
                 print(f"ERROR: Fatal error - Line {line_num}: Unexpected error - {str(e)}")
                 continue
-
     return accounts
 
 def find_account_by_name(accounts, name):
@@ -126,8 +107,10 @@ def find_account_by_number(accounts, number):
     return False
 
 def find_account(accounts, name):
+    clean_name = name.strip().lower()
     for account in accounts:
-        if account["account_name"].lower() == name.lower():  # Case-insensitive comparison
+        if account["account_name"].lower() == clean_name:  # Case-insensitive comparison
+
             return account  # Return the account details if found
     return None  # Return None if not found
 

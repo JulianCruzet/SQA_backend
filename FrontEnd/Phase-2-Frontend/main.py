@@ -3,6 +3,7 @@ import login_logout
 import removeAccount
 import createAccount
 import moveMoney
+import re
 
 def handle_command(session):
     privlagedTransactions = ["create", "change_plan", "delete", "disable"]
@@ -12,6 +13,11 @@ def handle_command(session):
         if transaction == "logout":
             session.logout()
             break
+        if re.fullmatch(r"logout#[1-7]", transaction):
+            day = int(transaction[7:])
+            session.logout(day)
+            break
+
         
         if not transaction:
             print("Error: Please enter a transaction.")

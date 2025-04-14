@@ -19,9 +19,9 @@ class moveMoney:
         #Get account holder name and find the account
         self.account_holder = input("Enter account holder ")
         account = account_utils.find_account(accounts, self.account_holder)
-        if not account:
-            print('Error: Account holder does not exist')
-            return False,''
+        # if not account:
+        #     print('Error: Account holder does not exist')
+        #     return False,''
         
 
         #User enters account number whom they want money transferred to/from
@@ -30,9 +30,9 @@ class moveMoney:
             print("Error: Account number does not match account holder.")
             return False, ''
         self.transferto = input("enter account number to transfer to ")
-        if not account_utils.find_account_by_number(accounts,self.transferto):
-            print("Error: Account number does not exist.")
-            return None, ""
+        # if not account_utils.find_account_by_number(accounts,self.transferto):
+        #     print("Error: Account number does not exist.")
+        #     return None, ""
 
         print(f"balance value: {account['balance']}")
 
@@ -86,7 +86,7 @@ class moveMoney:
         
         #User enters account number
         self.account_number = input("Enter account number ")
-        if self.account_number != account["account_number"]:
+        if int(self.account_number) != int(account["account_number"]):
             print("Error: Account number does not match account holder.")
             return False,""
 
@@ -146,7 +146,7 @@ class moveMoney:
 
         #User enters account number
         self.account_number = input("enter account number ")
-        if self.account_number != account["account_number"]:
+        if int(self.account_number) != int(account["account_number"]):
             print("Error: Account number does not match account holder.")
             return False,""
 
@@ -174,9 +174,10 @@ class moveMoney:
             return False,""
         
         # User enters account number
-        self.account_number = input("Enter account number: ")
+        self.account_number = int(input("Enter account number: "))
+        print(self.account_number,account['account_number'])
         
-        if self.account_number != account["account_number"]:
+        if self.account_number != int(account["account_number"]):
             print("Error: Account number does not match account holder.")
             return False,""
 

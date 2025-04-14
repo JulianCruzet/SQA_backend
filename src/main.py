@@ -76,7 +76,7 @@ def main():
     with_draw_fail = False
     new_accounts =account_manager.get_accounts()
 
-    for tra in transactions:
+    for i, tra in enumerate(transactions):
         if tra["transaction_code"] == "01":
 
             money_manager.withdraw(tra)
@@ -114,10 +114,14 @@ def main():
         elif tra["transaction_code"] == "07":
             account_manager.change_status(tra['account_number'])
             apply_fee(new_accounts[str(tra['account_number'])])
+
         elif tra["transaction_code"] == "08":
             account_manager.change_plan(tra['account_number'])
             apply_fee(new_accounts[str(tra['account_number'])])
+
+
         elif tra["transaction_code"] == "00":
+            print('here')
             accounts=account_manager.get_accounts()
             final_accounts = list(accounts.values())
             #write_new_current_accounts(final_accounts,'master_accounts.txt')
@@ -125,6 +129,7 @@ def main():
             break
         else:
             log_constraint_error("Invalid transaction code", tra["transaction_code"])
+
 
 if __name__ == "__main__":
     main()

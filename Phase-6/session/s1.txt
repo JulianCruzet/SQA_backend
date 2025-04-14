@@ -1,0 +1,6 @@
+login
+admin
+disable
+Einsten Augustine
+16
+logout#1
