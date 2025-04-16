@@ -3,5 +3,5 @@ admin
 withdraw
 Simon Vargas
 12
-1000
+500
 logout#2

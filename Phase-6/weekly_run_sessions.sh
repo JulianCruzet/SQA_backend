@@ -27,6 +27,7 @@ for session_num in {1..7}; do
     # Check if session directory exists
     if [ ! -d "$SESSION_DIR" ]; then
         echo "Session directory $SESSION_DIR not found, skipping..."
+        echo ""
         continue
     fi
 
@@ -34,7 +35,7 @@ for session_num in {1..7}; do
     mkdir -p "$OUTPUT_DIR"
 
     # Process all .txt files in the session directory
-    find "$SESSION_DIR" -type f -name "*.txt" | while read -r txt_file; do
+    while IFS= read -r -d '' txt_file; do
         # Get the relative path of the .txt file
         relative_path="${txt_file#$SESSION_DIR/}"
 
@@ -48,36 +49,39 @@ for session_num in {1..7}; do
         # Define output file path
         output_file="$OUTPUT_DIR/$test_subdir/$base_name.out"
 
-        # Run Python script using a here document that feeds input line-by-line
+        # Run Python script
         echo "Session test $base_name running..."
 
-        {
-            while IFS= read -r line || [ -n "$line" ]; do
-                echo "$line"
-            done < "$txt_file"
-        } | python3 "$PYTHON_SCRIPT" > "$output_file"
+        # Use a temporary file for input to ensure proper line handling
+        tmp_input=$(mktemp)
+        # Ensure proper line endings and remove empty lines if needed
+        sed 's/\r$//' "$txt_file" | grep -v '^$' > "$tmp_input"
+
+        # Feed input line by line to Python script
+        python3 "$PYTHON_SCRIPT" < "$tmp_input" > "$output_file"
+        rm "$tmp_input"
 
         # Print completion message
         echo "Session test $base_name completed. Output saved in $output_file"
-    done
+    done < <(find "$SESSION_DIR" -type f -name "*.txt" -print0)
 
     # =============================================
     # Merge files from this session
     # =============================================
 
     # Initialize the merged file (create empty or clear existing)
-    > "$MERGED_FILE"
+    : > "$MERGED_FILE"
 
     echo "Starting merge of session $session_num files..."
 
     # Find all .txt files in the session and merge them
-    find "$SESSION_DIR/../../src/sessions" -type f -name "*.txt" | while read -r txt_file; do
+    while IFS= read -r -d '' txt_file; do
         base_name=$(basename "$txt_file")
         echo "Merging $base_name into $MERGED_FILE"
 
-        # Append file content to merged file
-        cat "$txt_file" >> "$MERGED_FILE"
-    done
+        # Append file content to merged file with proper line endings
+        sed 's/\r$//' "$txt_file" >> "$MERGED_FILE"
+    done < <(find "$SESSION_DIR/../../src/sessions" -type f -name "*.txt" -print0)
 
     printf "00 End of Session       99999 00000.00 NA\n" >> "$MERGED_FILE"
     echo "Merge completed for session $session_num. Files combined in:"

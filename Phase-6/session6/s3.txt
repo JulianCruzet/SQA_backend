@@ -3,5 +3,5 @@ admin
 withdraw
 Alonzo Manaog
 1
-200
+20
 logout#3

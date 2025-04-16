@@ -3,5 +3,5 @@ admin
 withdraw
 Julian Cruzet
 5
-500
+50
 logout#3

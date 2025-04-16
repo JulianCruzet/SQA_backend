@@ -1,3 +1,5 @@
+02 Simon Vargas         00012 00050.00 FR
+02 1                    00001 00050.00 TO
 07 Simon Vargas         00012 00862.00 NA
 07 Alonzo Manaog        00001 00073.00 NA
 00 End of Session       99999 00000.00 NA

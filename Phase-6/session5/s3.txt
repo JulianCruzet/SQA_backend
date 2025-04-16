@@ -4,5 +4,5 @@ pay_bill
 Alonzo Manaog
 1
 EC
-1000
+50
 logout#3
