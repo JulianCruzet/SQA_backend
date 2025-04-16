@@ -1,0 +1,6 @@
+login
+admin
+disable
+Alonzo Manaog
+1
+logout#3

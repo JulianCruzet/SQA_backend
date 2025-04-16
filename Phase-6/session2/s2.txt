@@ -1,0 +1,7 @@
+login
+admin
+deposit
+Alonzo Manaog
+1
+1000
+logout#2

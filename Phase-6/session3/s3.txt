@@ -1,0 +1,7 @@
+login
+admin
+withdraw
+Julian Cruzet
+5
+500
+logout#3

@@ -1,0 +1,8 @@
+login
+admin
+transfer
+Simon Vargas
+12
+1
+50
+logout#1

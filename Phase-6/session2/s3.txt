@@ -1,0 +1,7 @@
+login
+admin
+withdraw
+Simon Vargas
+12
+50
+logout#3

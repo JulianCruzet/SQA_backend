@@ -1,0 +1,7 @@
+login
+admin
+deposit
+Julian Cruzet
+5
+1000
+logout#3

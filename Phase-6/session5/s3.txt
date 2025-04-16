@@ -1,0 +1,8 @@
+login
+admin
+pay_bill
+Alonzo Manaog
+1
+EC
+1000
+logout#3

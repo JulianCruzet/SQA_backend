@@ -1,0 +1,7 @@
+login
+admin
+withdraw
+Alonzo Manaog
+1
+200
+logout#3

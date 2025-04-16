@@ -1,0 +1,8 @@
+login
+admin
+transfer
+Alonzo Manaog
+1
+12
+20
+logout#2

@@ -4,7 +4,7 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Define the session input directory
-SESSION_DIR="$SCRIPT_DIR/session"
+SESSION_DIR="$SCRIPT_DIR/session1"
 
 # Define the Python script location (assumed to be in the same directory)
 PYTHON_SCRIPT="$SCRIPT_DIR/../FrontEnd/Phase-2-FrontEnd/main.py"

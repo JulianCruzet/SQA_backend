@@ -1,0 +1,7 @@
+login
+admin
+deposit
+Simon Vargas
+12
+1000
+logout#1

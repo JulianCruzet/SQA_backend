@@ -1,0 +1,6 @@
+login
+admin
+change_plan
+Alonzo Manaog
+1
+logout#1

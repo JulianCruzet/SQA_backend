@@ -1,0 +1,8 @@
+login
+admin
+pay_bill
+Simon Vargas
+12
+CQ
+100
+logout#1
