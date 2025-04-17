@@ -1,64 +1,38 @@
 #!/bin/bash
 
-# Get the directory where this script is located
+# Get the directory where the script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Define the session input directory
-SESSION_DIR="$SCRIPT_DIR/session"
+# Define the test directory (relative to where the script is placed)
+TEST_DIR="$SCRIPT_DIR/../Banking-System/transaction-log-(input)"
 
-# Define the Python script location (assumed to be in the same directory)
-PYTHON_SCRIPT="$SCRIPT_DIR/../FrontEnd/Phase-2-FrontEnd/main.py"
+# Define the Python script location (assumed to be in the same directory as this script)
+PYTHON_SCRIPT="$SCRIPT_DIR/main.py"
 
-# Define output directory
-OUTPUT_DIR="$SCRIPT_DIR/session_outputs"
+# Define the base output directory
+OUTPUT_DIR="$SCRIPT_DIR/test_outputs"
 
-# Define merged transactions file
-MERGED_DIR="$SCRIPT_DIR/../src/sessions"
-MERGED_FILE="$MERGED_DIR/merged_bank_transaction.txt"
-
-# Ensure the output directories exist
+# Ensure the output directory exists
 mkdir -p "$OUTPUT_DIR"
-mkdir -p "$MERGED_DIR"
 
-# Initialize or clear the merged transactions file
-> "$MERGED_FILE"
+# Find all .inp files in subdirectories and run tests
+find "$TEST_DIR" -type f -name "*.inp" | while read -r inp_file; do
+    # Get the relative path of the .inp file (excluding TEST_DIR)
+    relative_path="${inp_file#$TEST_DIR/}"
 
-# Find all .txt files in the session directory and run tests
-find "$SESSION_DIR" -type f -name "*.txt" | while read -r txt_file; do
-    # Get the relative path of the .txt file
-    relative_path="${txt_file#$SESSION_DIR/}"
-
-    # Extract the subdir and base name
+    # Extract the directory structure and filename
     test_subdir=$(dirname "$relative_path")
-    base_name=$(basename "$txt_file" .txt)
+    base_name=$(basename "$inp_file" .inp)
 
-    # Create corresponding output subdir
+    # Create the corresponding subdirectory in OUTPUT_DIR
     mkdir -p "$OUTPUT_DIR/$test_subdir"
 
-    # Define output file path
+    # Define the output file path
     output_file="$OUTPUT_DIR/$test_subdir/$base_name.out"
 
-    # Run Python script using a here document that feeds input line-by-line
-    echo "Session test $base_name running..."
+    # Run the Python script with the .inp file as input and store the output
+    python3 "$PYTHON_SCRIPT" < "$inp_file" > "$output_file"
 
-    {
-        while IFS= read -r line || [ -n "$line" ]; do
-            echo "$line"
-        done < "$txt_file"
-    } | python3 "$PYTHON_SCRIPT" > "$output_file"
-
-    # Print completion message
-    echo "Session test $base_name completed. Output saved in $output_file"
-
-    # Append the content of the current session file to the merged file
-    echo "Merging $base_name.txt into merged_bank_transaction.txt"
-    cat "$txt_file" >> "$MERGED_FILE"
-
-    # Add a separator between different session files in the merged file
-    echo "" >> "$MERGED_FILE"
-    echo "=== End of $base_name session ===" >> "$MERGED_FILE"
-    echo "" >> "$MERGED_FILE"
+    # Print a message indicating completion of the test
+    echo "Test $base_name completed. Output saved in $output_file"
 done
-
-echo "All session tests completed."
-echo "Merged bank transactions file created at: $MERGED_FILE"
